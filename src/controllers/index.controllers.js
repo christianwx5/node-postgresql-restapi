@@ -5,7 +5,10 @@ const pool = new Pool ({
     user: 'ncngrlakkkqqdc',
     password: 'c841fdf8d2cf596acd155604b38e381dbe5f9b24db623b4567e9b335d7cc76d6',
     database: 'd1mfa9vvp520pf',
-    port: '5432'
+    port: '5432',
+    ssl: {
+        rejectUnauthorized: false
+    }
 
 })
 
