@@ -1,15 +1,19 @@
-// const { Pool } = require('pg');
+const { Pool } = require('pg');
 
-// const pool = new Pool({
-//     user: 'postgres',
-//     host: 'localhost',
-//     password: '',
-//     database: 'firstapi',
-//     port: '5432'
-// });
-
-const getUsers = (req,res)=>{
-    res.status(200).json({holaa:"como estas, bien?"});
+const pool = new Pool({
+    host: 'localhost',
+    user: 'postgres',
+    // schemas: 'public',
+    password: '12345',
+    database: 'firstapi',
+    port: '5432'
+});
+ 
+const getUsers = async (req,res)=>{
+    console.log("antes de que se cuelgue");
+    const response = await pool.query("SELECT * FROM users");
+    console.log(response.rows);
+    res.status(200).json({holaa:"como estas, bien?2"});
 };
 
 // const getUserById = async (req, res) => {
