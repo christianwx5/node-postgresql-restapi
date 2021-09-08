@@ -11,8 +11,8 @@ const pool = new Pool({
  
 const getUsers = async (req,res)=>{
     console.log("antes de que se cuelgue");
-    const response = await pool.query("SELECT * FROM users");
-    console.log(response.rows);
+    //const response = await pool.query("SELECT * FROM users");
+    console.log("response.rows");
     res.status(200).json({holaa:"como estas, bien?2"});
 };
 
