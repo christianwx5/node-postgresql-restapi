@@ -1,20 +1,17 @@
 {
-  "name": "node-postgresql-restapi",
+  "name": "restapi-node-postgres",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "pg": "^7.18.2"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.3"
+    "pg": "^8.7.1"
   }
 }
