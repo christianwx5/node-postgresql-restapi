@@ -16,7 +16,7 @@ const getUser = async (req,res)=>{
     console.log("mensaje antes del colappso");
     const response = await pool.query('SELECT * FROM alumnos');
     console.log(response.rows);
-    res.send('users 2 hola');
+    res.status(200).json(response.rows);
 }
 
 module.exports = {
