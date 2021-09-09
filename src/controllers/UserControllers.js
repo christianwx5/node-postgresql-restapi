@@ -24,7 +24,7 @@ const pool = new Pool ({
 //     port: '5432'
 // })
 
-const getUserC = async (req,res)=>{
+const getUsersC = async (req,res)=>{
     console.log("mensaje antes del colappso");
     const response = await pool.query('SELECT * FROM alumnos');
     console.log(response.rows);
@@ -50,10 +50,32 @@ const createUserC = async (req,res)=>{
     });
 }
 
+const updateUserC = async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { nombre } = req.body;
+
+    const response =await pool.query('UPDATE alumnos SET nombre = $1 WHERE id = $2', [
+        
+        nombre,
+        id
+    ]);
+    res.json('User Updated Successfully');
+};
+
+const deleteUserC = async (req, res) => {
+    const id = parseInt(req.params.id);
+    await pool.query('DELETE FROM alumnos where id = $1', [
+        id
+    ]);
+    res.json(`User ${id} deleted Successfully`);
+};
+
 module.exports = {
-    getUserC,
+    getUsersC,
     getUserByIdC,
-    createUserC
+    createUserC, 
+    updateUserC, 
+    deleteUserC
 
 }
 
