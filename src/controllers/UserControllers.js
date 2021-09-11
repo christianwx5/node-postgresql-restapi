@@ -35,26 +35,55 @@ const getUsersC = async (req,res)=>{
 const getUserByIdC = async (req,res) => {
     const id = req.params.id;
     const response = await pool.query('SELECT * FROM alumnos WHERE id = $1', [id]);
-    res.json(response.rows)
+    res.status(200).json(response.rows);
 }
 
 const createUserC = async (req,res)=>{
-    const { nombre } = req.body;
-    const response = await pool.query('INSERT INTO alumnos (nombre) VALUES ($1)',[nombre]);
-    console.log(response);
-    res.json({
-        message: 'User Added Succesfully',
-        body: {
-            user: {nombre}
-        }
-    });
+    const { username, email, password, full_name, company, cif, siret, zip_code, country, city, phone_1, phone_2, email_paypal, role, wallet_balance, status } = req.body;
+    //const id2 = 19;
+
+    const fields = "username, email, password, full_name, company, zip_code, country, city, phone_1";
+
+    const values = [
+        username, 
+        email, 
+        password, 
+        full_name, 
+        company, 
+        zip_code, 
+        country, 
+        city, 
+        phone_1
+    ];
+
+    const num_fields = values.length;
+    try {
+        //Cuenta el numero de campos que deben ser registrados
+        var NumValues = ConterField(num_fields);
+    
+        const response = await pool.query('INSERT INTO users ('+fields+') VALUES ('+NumValues+')',values);
+        console.log(response);
+        res.status(200).json({
+            message: 'User Added Succesfully',
+            body: {
+                user: {username},
+                email: {email}
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Ocurrio un error motivo: '+error
+        });
+    }
+
+    
 }
 
 const updateUserC = async (req, res) => {
     const id = parseInt(req.params.id);
     const { nombre } = req.body;
 
-    const response =await pool.query('UPDATE alumnos SET nombre = $1 WHERE id = $2', [
+    const response = await pool.query('UPDATE alumnos SET nombre = $1 WHERE id = $2', [
         
         nombre,
         id
@@ -69,6 +98,15 @@ const deleteUserC = async (req, res) => {
     ]);
     res.json(`User ${id} deleted Successfully`);
 };
+
+function ConterField (num_fields) {
+    var NumValues = "";
+    for (var i = 1; i <num_fields;i++) {
+        NumValues += "$"+i+",";
+    }
+    NumValues += "$"+num_fields;
+    return NumValues;
+}
 
 module.exports = {
     getUsersC,
