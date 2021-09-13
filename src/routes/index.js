@@ -3,9 +3,9 @@ const routes = Router();
 const auth = require('./auth');
 const user = require('./user'); 
 
-// routes.use('/auth', auth);
+routes.use('/authentication', auth);
 routes.use('/user', user);
-//app.use('/',routes);
+
 
 module.exports = routes;
 

@@ -24,6 +24,14 @@ const pool = new Pool ({
 //     port: '5432'
 // })
 
+
+// const legueado = async (req, res) => {
+//     const {userId} = res.locals.jwtPayload;
+
+//     res.json ({message: 'Password change!'});
+// }; 
+
+
 const getUsersC = async (req,res)=>{
     console.log("mensaje antes del colappso");
     const response = await pool.query('SELECT * FROM alumnos');
@@ -39,10 +47,16 @@ const getUserByIdC = async (req,res) => {
 }
 
 const createUserC = async (req,res)=>{
-    const { username, email, password, full_name, company, cif, siret, zip_code, country, city, phone_1, phone_2, email_paypal, role, wallet_balance, status } = req.body;
+    const { username, email, password, full_name, company, cif, siret, zip_code, country, city, phone_1, phone_2, email_paypal } = req.body;
     //const id2 = 19;
 
-    const fields = "username, email, password, full_name, company, zip_code, country, city, phone_1";
+    const fields = "username, email, password, full_name, company, zip_code, country, city, phone_1, role, wallet_balance, status";
+    
+     
+
+    const role = "client";
+    const wallet_balance = 0;
+    const status = true;
 
     const values = [
         username, 
@@ -53,7 +67,10 @@ const createUserC = async (req,res)=>{
         zip_code, 
         country, 
         city, 
-        phone_1
+        phone_1, 
+        role,
+        wallet_balance,
+        status
     ];
 
     const num_fields = values.length;
@@ -71,11 +88,10 @@ const createUserC = async (req,res)=>{
             }
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             message: 'Ocurrio un error motivo: '+error
         });
     }
-
     
 }
 
@@ -113,7 +129,8 @@ module.exports = {
     getUserByIdC,
     createUserC, 
     updateUserC, 
-    deleteUserC
+    deleteUserC,
+    //legueado
 
 }
 

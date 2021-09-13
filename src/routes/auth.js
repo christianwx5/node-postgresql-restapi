@@ -1,13 +1,13 @@
-// import {Router} from 'express';
-// import AuthController from '../controller/authControllers';
-// import { checkJwt } from '../middleware/jwt';
+const {Router}  = require('express');
+const AuthController = require('../controllers/AuthControllers');
+const { checkJwt } = require('../middleware/jwt');
 
-// const router = Router();
+const routes = Router();
 
-// //login
-// router.post('/login', AuthController.login);
+//login
+routes.post('/login', AuthController.login);
 
-// // Change password
-// router.post('/change-pasword', [checkJwt], AuthController.changePassword);
+// Change password
+routes.post('/change-pasword', AuthController.changePassword);
 
-// export default router;
+module.exports = routes;
